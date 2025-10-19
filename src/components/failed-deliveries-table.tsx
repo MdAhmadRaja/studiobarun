@@ -45,18 +45,18 @@ export function FailedDeliveriesTable() {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
-      <Accordion type="single" collapsible className="w-full">
-        <div className="rounded-lg border">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Webhook URL</TableHead>
-                <TableHead>Event</TableHead>
-                <TableHead>Timestamp</TableHead>
-                <TableHead>Error</TableHead>
-                <TableHead className="w-[50px]"></TableHead>
-              </TableRow>
-            </TableHeader>
+      <div className="rounded-lg border">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Webhook URL</TableHead>
+              <TableHead>Event</TableHead>
+              <TableHead>Timestamp</TableHead>
+              <TableHead>Error</TableHead>
+              <TableHead className="w-[50px]"></TableHead>
+            </TableRow>
+          </TableHeader>
+          <Accordion type="single" collapsible asChild>
             <TableBody>
               {filteredDeliveries.map((delivery) => (
                 <AccordionItem value={delivery.id} key={delivery.id} asChild>
@@ -71,22 +71,24 @@ export function FailedDeliveriesTable() {
                       <TableCell>{delivery.timestamp}</TableCell>
                       <TableCell>
                         <div className="flex items-center gap-2 text-destructive">
-                           <AlertCircle className="h-4 w-4"/>
-                           {delivery.error}
+                          <AlertCircle className="h-4 w-4" />
+                          {delivery.error}
                         </div>
                       </TableCell>
                       <TableCell>
                         <AccordionTrigger asChild>
-                            <Button variant="ghost" size="sm">
-                              Details <ChevronDown className="h-4 w-4 ml-2" />
-                            </Button>
+                          <Button variant="ghost" size="sm">
+                            Details <ChevronDown className="h-4 w-4 ml-2" />
+                          </Button>
                         </AccordionTrigger>
                       </TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell colSpan={5} className="p-0">
-                        <AccordionContent className="p-4">
-                          <SmartRetryCard logs={delivery.logs} />
+                        <AccordionContent>
+                          <div className="p-4">
+                            <SmartRetryCard logs={delivery.logs} />
+                          </div>
                         </AccordionContent>
                       </TableCell>
                     </TableRow>
@@ -94,9 +96,9 @@ export function FailedDeliveriesTable() {
                 </AccordionItem>
               ))}
             </TableBody>
-          </Table>
-        </div>
-      </Accordion>
+          </Accordion>
+        </Table>
+      </div>
     </div>
   );
 }
